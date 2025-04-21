@@ -33,29 +33,102 @@
 
 		<br>
 
-		Link to Website: <a href=""></a>
+		Link to Website: <a href="https://michael-wsp.github.io/polygone-webpage/">https://michael-wsp.github.io/polygone-webpage/</a>
 		
 		<br>
 
-		Link to Website: <a href=""></a>
+		Link to Milestone Slides: <a href="https://docs.google.com/presentation/d/1P7KPHY6OwA6z_1yU1DDkJwnzC3LusMq9tifQTqV5SCM/edit?usp=sharing">https://docs.google.com/presentation/d/1P7KPHY6OwA6z_1yU1DDkJwnzC3LusMq9tifQTqV5SCM/edit?usp=sharing</a>
 
 		<br>
 
-		Link to Milestone Video: <a href=""></a>
+		Link to Milestone Video: <a href="https://youtu.be/Y8r5TAHOQUI?feature=shared">https://youtu.be/Y8r5TAHOQUI?feature=shared</a>
+
+		<br>
+
+		Link to Github Repository: <a href="https://github.com/cal-cs184-student/Polygone">https://github.com/cal-cs184-student/Polygone</a>
 
 
-		<h2>Overview</h2>
+		<h2>Milestone Progress</h2>
+		So far, we have implemented several mesh operations that will be used for various 
+		remeshing techniques, including vertex shift, fill missing faces, remove degenerate 
+		triangles, and edge collapse. We started our project from homework 2, where we 
+		had implemented edge flip and edge split. These additional operations will be 
+		crucial for remeshing and repairing 
+		malformed meshes. We also have implemented 2 remeshing algorithms so far: 
+		Incremental remeshing and Pixellate remeshing.
 		
 
-		<h2></h2>
-		
-		<br/>
-		<br/>
+		<h2>Mesh Operations</h2>
+		Vertex shift helps to regularize meshes by moving 
+		vertices towards the average of their neighbors. Specifically, a correction 
+		vector is created between a vertex and the average of its neighbors, scaled 
+		by a factor of lambda between 0 and 1, and finally applied to the original 
+		position of the vertex. This algorithm can also be used in succession. 
+		Below is an example of 0, 1, and 5 iterations of this vertex shift algorithm.
 
-		<br/>
-		<br/>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="img/vs0.png" width="300px"/>
+				  <figcaption>0 iterations</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="img/vs1.png" width="300px"/>
+				  <figcaption>1 iteration</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="img/vs5.png" width="300px"/>
+				  <figcaption>5 iterations</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		As mentioned above, we also added a function which will scan a mesh and attempt to fill any missing 
+		faces, assuming the mesh is intended to be airtight. Next, we implemented a 
+		function that will fix a degenerate face on a mesh (a face with 0 area) by 
+		removing the face and adjusting any adjacent geometry. This function makes 
+		use of the edge collapse operation with a special case for updating vertex 
+		positions. This will be useful for handling poorly formed meshes with our 
+		remeshing operations.
 		
-		<img src="img/test4.png" alt="test4" style="width:100%"/>
+		<h2>Remeshing Algorithms</h2>
+		We have added implementations of Incremental remeshing, which is an isotropic 
+		remeshing algorithm, meaning it is applied equally at all areas of the mesh.
+		We also made a preliminary implementation of a 
+		pixellate remesher, which turns an existing mesh into a pixellated version 
+		which appears to be made up of small cubes. An example of the pixellation remesh 
+		algorithm is shown below, and another example can be found in our video.
+
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="img/cow0.png" width="300px"/>
+				  <figcaption>Cow</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="img/cow1.png" width="300px"/>
+				  <figcaption>Pixellated cow</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+		Both of these algorithms are functional, but need additional debugging and optimization. 
+		The pixellate function is inefficient right now, and also generates some unnecessary 
+		geometry. Moving forward, our first goal will to make sure both of these operations 
+		are fully functional and optimized. Then, we hope to update the pixellate remesher 
+		to allow for real time modification of the voxel size as well as real time updates 
+		to modifications of the underlying mesh. We will also be adding more remeshing algorithms,
+		starting with quadric error mesh simplification. We would also like 
+		to implement an adaptive remeshing algorithm, which changes how it remeshes different 
+		parts of a surface based on the curvature and complexity of the mesh in that area. 
+		If we have time, we will look into more real-time remeshing algorithms that could 
+		be useful with creating realistic looking deformations in animation. We have 
+		kept up with our planned progress so far, and are looking forward to adding 
+		more functionality.
 		</div>
 	</body>
 </html>
